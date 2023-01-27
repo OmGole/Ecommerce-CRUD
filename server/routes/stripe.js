@@ -57,8 +57,8 @@ router.post('/create-checkout-session', auth ,async (req, res) => {
     line_items,
     customer:customer.id,
     mode: 'payment',
-    success_url: `http://localhost:3000/success`,
-    cancel_url: `http://localhost:3000/fail`,
+    success_url: `${process.env.CLIENT_URL}/success`,
+    cancel_url: `${process.env.CLIENT_URL}/fail`,
   });
 
   res.send({url:session.url});
@@ -88,10 +88,8 @@ router.post('/webhook', (req, res) => {
     let event;
   try {
     event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
-    console.log("Success");
   } catch (err) {
     res.status(400).send(`Webhook Error: ${err.message}`);
-    console.log("error",err.message);
     return;
    }
 
@@ -101,10 +99,8 @@ router.post('/webhook', (req, res) => {
     data = req.body.data.object;
     eventType = req.body.type;
   }
-  console.log("stripe")
   if(eventType === "checkout.session.completed") {
      stripe.customers.retrieve(data.customer).then(customer => {
-      console.log(customer,data);
       createOrder(customer, data);
      }).catch(error => console.log(error));
   }

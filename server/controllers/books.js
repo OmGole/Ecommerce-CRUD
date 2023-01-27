@@ -43,8 +43,8 @@ const getAllBooks = async (req,res) => {
 const createBook = async (req,res) => {
   try {
   req.body.createdBy = req.user.userId; 
-  const {name,author,price,language,rating,stock,category,description,image} = req.body;
-  if(!name || !author || !price || !language || !rating || !stock || !category || !description || !image) {
+  const {name,author,price,language,ratings,stock,category,description,image} = req.body;
+  if(!name || !author || !price || !language || !ratings || !stock || !category || !description || !image) {
     console.log(req.body);
     return res.status(401).send("Please fill the missing fields");
   }
