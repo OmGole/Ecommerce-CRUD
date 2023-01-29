@@ -23,7 +23,6 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/success" element={<Success />} />
         <Route path="/fail" element={<Fail />} />
-        <Route path="*" element={<Error />} />
         <Route element={<PrivateRoute role="user" />}>
           <Route path="/home" element={<Home />} />
           <Route exact path="/category/:cat/:id" element={<Product />} />
@@ -34,6 +33,7 @@ function App() {
         <Route element={<PrivateRoute role="admin" />}>
           <Route path="/dashboard" element={<DashBoard />} />
         </Route>
+        <Route path="*" element={<Error />} />
        
       </Routes>
       <ToastContainer
